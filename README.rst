@@ -23,6 +23,21 @@ the file `.env`:
     source .env && globus-flows-e2e-tests
 
 
+It is also possible to run the tests directly from this git repository:
+
+.. code-block:: bash
+
+    poetry install && .venv/bin/globus-flows-e2e-tests
+
+
+Slow tests can be skipped by running:
+
+.. code-block:: bash
+
+    globus-flows-e2e-tests --no-slow
+        OR
+    .venv/bin/globus-flows-e2e-tests --no-slow
+
 Configuration
 =============
 
