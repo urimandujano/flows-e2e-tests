@@ -14,8 +14,8 @@ Installation
 Usage
 =====
 
-# Store environment variable values in a safe place
-`source .env && globus-flows-e2e-tests`
+If storing the configuration in environment variable in the file `.env`: `source
+.env && globus-flows-e2e-tests`
 
 Configuration
 =============
