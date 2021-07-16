@@ -14,8 +14,14 @@ Installation
 Usage
 =====
 
-If storing the configuration in environment variable in the file `.env`: `source
-.env && globus-flows-e2e-tests`
+Store the configuration in a safe place. Keep in mind that exports on the command
+line are usually stored in your shell's history. If storing the configuration in
+the file `.env`:
+
+.. code-block:: bash
+
+    source .env && globus-flows-e2e-tests
+
 
 Configuration
 =============
