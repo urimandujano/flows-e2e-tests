@@ -9,14 +9,13 @@ usage.
 Installation
 ============
 
-pip install globus-flows-e2e-tests
+`pip install globus-flows-e2e-tests`
 
 Usage
 =====
 
 # Store environment variable values in a safe place
-source .env
-globus-flows-e2e-tests
+`source .env && globus-flows-e2e-tests`
 
 Configuration
 =============
@@ -28,15 +27,15 @@ runtime secrets.
 
 Environment variables:
 
-`FLOWS_TEST_ENVIRONMENT`
-    - purpose: |
+FLOWS_TEST_ENVIRONMENT
+    - purpose:
         Used to select the Flows environment to run tests against. This value is
         also used to set the `GLOBUS_SDK_ENVIRONMENT` variable which allows the
         Automate SDK to function against the different environments.
     - values: production, integration, sandbox, etc.
 
-`TEST_GLOBUS_AUTH_CLIENT_ID`
-    - purpose: |
+TEST_GLOBUS_AUTH_CLIENT_ID
+    - purpose:
         The Globus Auth client ID which will be used to run the tests. This
         client should be a confidential client capabable of consenting to scopes
         dynamically. Care should be taken to ensure that the client used for
@@ -45,8 +44,8 @@ Environment variables:
         client ID defined in the package's config.
     - values: uuid
 
-`TEST_GLOBUS_AUTH_CLIENT_SECRET`
-    - purpose: |
+TEST_GLOBUS_AUTH_CLIENT_SECRET
+    - purpose:
         The Globus Auth client ID's secret which is used to authenticate
         requests. This package makes no assumptions about how the secret got
         into the running environment. Care should be taken to ensure that the
