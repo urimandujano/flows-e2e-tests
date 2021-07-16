@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "globus-flows-e2e-tests"
+name = "flows-e2e-tests"
 version = "0.1.0"
 description = ""
 authors = ["Uriel Mandujano <uriel@globus.org>"]
