@@ -1,0 +1,45 @@
+[tool.poetry]
+name = "globus-flows-e2e-tests"
+version = "0.1.0"
+description = ""
+authors = ["Uriel Mandujano <uriel@globus.org>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+globus-automate-client = "^0.11.5"
+dynaconf = "^3.1.4"
+structlog = "^21.1.0"
+pytest = "^6.2.4"
+pytest-xdist = "^2.3.0"
+pydantic = "^1.8.2"
+
+[tool.poetry.dev-dependencies]
+black = "^21.6b0"
+mypy = "^0.910"
+isort = "^5.9.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+rm-flow = 'flows_e2e_tests.scripts:delete_flow'
+globus-flows-e2e-tests = 'flows_e2e_tests.scripts:run_tests'
+
+[tool.isort]
+profile = "black"
+src_paths = ["flows_e2e_tests"]
+
+[tool.mypy]
+python_version = "3.9"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q -v" # add -n 2 once client is whitelisted
+testpaths = [
+    "flows_e2e_tests",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]

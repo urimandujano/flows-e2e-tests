@@ -1,0 +1,14 @@
+[production]
+globus_auth_client_id = "d3a66776-759f-4316-ba55-21725fe37323"
+max_wait_time = 60
+
+[integration]
+globus_auth_client_id = "983c81bd-92db-4961-9b24-4b12b17a5db0"
+
+[sandbox]
+
+[test]
+
+[preview]
+
+[staging]
