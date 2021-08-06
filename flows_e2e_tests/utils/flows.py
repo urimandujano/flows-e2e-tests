@@ -16,5 +16,6 @@ flows_client = create_flows_client(
     base_url=None,
     authorizer=authorizer_retriever(flow_scope=MANAGE_FLOWS_SCOPE),
     authorizer_callback=authorizer_retriever,
+    http_timeout=10,
 )
 logger.debug(f"Initialized Flows Client at {flows_client.base_url}")

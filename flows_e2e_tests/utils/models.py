@@ -23,7 +23,9 @@ class FlowResponse(BaseModel):
     flow_viewers: t.List[str]
     globus_auth_scope: str
     globus_auth_username: str
-    input_schema: t.Dict[str, t.Any]
+    # If the Flow doesn't have an input schema defined it will be removed from
+    # the output, so default it here
+    input_schema: t.Dict[str, t.Any] = {}
     keywords: t.List[str]
     log_supported: bool
     principal_urn: str = Field(regex=auth_id_urn_regex)
@@ -72,6 +74,7 @@ class RunResponse(BaseModel):
     details: t.Dict[str, t.Any]
     display_status: str
     flow_last_updated: t.Optional[datetime.datetime]
+    flow_deleted_at: t.Optional[datetime.datetime] = None
     run_managers: t.List[str] = Field(regex=principal_urn_regex)
     run_monitors: t.List[str] = Field(regex=principal_urn_regex)
     run_owner: str = Field(regex=auth_id_urn_regex)

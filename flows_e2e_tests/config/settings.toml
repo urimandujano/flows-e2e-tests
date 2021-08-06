@@ -6,8 +6,10 @@ max_wait_time = 60
 globus_auth_client_id = "983c81bd-92db-4961-9b24-4b12b17a5db0"
 
 [sandbox]
+globus_auth_client_id = "dce62f09-2e56-46d9-8eea-e6fcea88b65c"
 
 [test]
+globus_auth_client_id = "cdd9e469-d9ce-4f94-96fd-c702b325c207"
 
 [preview]
 
