@@ -7,7 +7,7 @@ from dynaconf import Dynaconf, Validator
 logger = structlog.get_logger(__name__)
 
 CURR_DIR = Path(__file__).resolve().parent
-logger.debug(f"Reading settings from {CURR_DIR}")
+logger.debug(f"Reading settings at {CURR_DIR}")
 
 ENV_SWITCHER = "FLOWS_TEST_ENVIRONMENT"
 ENV_VALUE = os.getenv(ENV_SWITCHER, "production")
