@@ -1,5 +1,5 @@
 [production]
-globus_auth_client_id = "d3a66776-759f-4316-ba55-21725fe37323"
+globus_auth_client_id = "df9e119d-d952-4919-8a81-d2e89ebf4b58"
 max_wait_time = 60
 
 [integration]
