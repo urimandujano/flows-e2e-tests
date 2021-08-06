@@ -47,16 +47,14 @@ Environment variables
 
 FLOWS_TEST_ENVIRONMENT
 ^^^^^^^^^^^^^^^^^^^^^^
-    purpose:
-        Used to select the Flows environment to run tests against. This value is
+    purpose: Used to select the Flows environment to run tests against. This value is
         also used to set the `GLOBUS_SDK_ENVIRONMENT` variable which allows the
         Automate SDK to function against the different environments.
     values: production, integration, sandbox, etc.
 
 TEST_GLOBUS_AUTH_CLIENT_ID
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
-    purpose:
-        The Globus Auth client ID which will be used to run the tests. This
+    purpose: The Globus Auth client ID which will be used to run the tests. This
         client should be a confidential client capabable of consenting to scopes
         dynamically. Care should be taken to ensure that the client used for
         testing exists in the target test environment. Note that although you
@@ -66,8 +64,7 @@ TEST_GLOBUS_AUTH_CLIENT_ID
 
 TEST_GLOBUS_AUTH_CLIENT_SECRET
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    purpose:
-        The Globus Auth client ID's secret which is used to authenticate
+    purpose: The Globus Auth client ID's secret which is used to authenticate
         requests. This package makes no assumptions about how the secret got
         into the running environment. Care should be taken to ensure that the
         secret used for testing exists in the target test environment.
