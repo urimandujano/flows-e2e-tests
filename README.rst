@@ -43,10 +43,9 @@ environment variables to determine its runtime configuration as well as to use
 runtime secrets.
 
 Environment variables
----------------------
+*********************
 
 FLOWS_TEST_ENVIRONMENT
-**********************
     purpose:
         Used to select the Flows environment to run tests against. This value is
         also used to set the `GLOBUS_SDK_ENVIRONMENT` variable which allows the
@@ -54,7 +53,6 @@ FLOWS_TEST_ENVIRONMENT
     values: production, integration, sandbox, etc.
 
 TEST_GLOBUS_AUTH_CLIENT_ID
-**************************
     purpose:
         The Globus Auth client ID which will be used to run the tests. This
         client should be a confidential client capabable of consenting to scopes
@@ -65,7 +63,6 @@ TEST_GLOBUS_AUTH_CLIENT_ID
     values: uuid
 
 TEST_GLOBUS_AUTH_CLIENT_SECRET
-******************************
     purpose:
         The Globus Auth client ID's secret which is used to authenticate
         requests. This package makes no assumptions about how the secret got
@@ -73,8 +70,8 @@ TEST_GLOBUS_AUTH_CLIENT_SECRET
         secret used for testing exists in the target test environment.
     values: secret
 
-Config file
------------
+.env file
+*********
 
 To simplify interactive use and remove the need to export senstive secrets on
 the command line (which may be stored in your shell's history), this package
