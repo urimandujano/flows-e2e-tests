@@ -16,8 +16,8 @@ Usage
 
 Store the configuration in a safe place. Keep in mind that exports on the command
 line are usually stored in your shell's history. It's recommended to store the
-configuration a file called `.env`. This file is automatically loaded when the
-package is run.
+configuration a file called `.env` in the working directory. This file is
+automatically loaded when the package is run.
 
 It is also possible to run the tests directly from this git repository:
 
@@ -45,25 +45,29 @@ runtime secrets.
 Environment variables
 *********************
 
-FLOWS_TEST_ENVIRONMENT
-^^^^^^^^^^^^^^^^^^^^^^
+E2E_TESTS_FLOWS_ENV
+^^^^^^^^^^^^^^^^^^^
     purpose: Used to select the Flows environment to run tests against. This value is
         also used to set the `GLOBUS_SDK_ENVIRONMENT` variable which allows the
-        Automate SDK to function against the different environments.
-    values: production, integration, sandbox, etc.
+        Automate SDK to function against the different environments. This
+        environment variable must be set manually and will not be read from a
+        .env file.
+    values: production, integration, sandbox, preview, staging, test
+    default: production
 
-TEST_GLOBUS_AUTH_CLIENT_ID
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+E2E_TESTS_GLOBUS_AUTH_CLIENT_ID
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     purpose: The Globus Auth client ID which will be used to run the tests. This
         client should be a confidential client capabable of consenting to scopes
         dynamically. Care should be taken to ensure that the client used for
         testing exists in the target test environment. Note that although you
-        can set this as an environment variable, you usually want to use the
-        client ID defined in the package's config.
+        can set this as an environment variable or in a .env file, you usually
+        want to use the client ID defined in the package's config.
     values: uuid
+    default: environment specific client ID
 
-TEST_GLOBUS_AUTH_CLIENT_SECRET
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E2E_TESTS_GLOBUS_AUTH_CLIENT_SECRET
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     purpose: The Globus Auth client ID's secret which is used to authenticate
         requests. This package makes no assumptions about how the secret got
         into the running environment. Care should be taken to ensure that the
@@ -78,6 +82,13 @@ the command line (which may be stored in your shell's history), this package
 will automatically attempt to load a file named `.env` in the directory from
 which it's run. This file should be in `KEY=VALUE` format where the KEY is one 
 of the environment variables above.
+
+Below in a minimal example of what the .env file may look like:
+
+.. code-block:: bash
+
+   E2E_TESTS_GLOBUS_AUTH_CLIENT_SECRET=$uper$ecret$auce
+
 
 Creating a Client or Secrets in an Auth Environment
 ===================================================

@@ -1,6 +1,8 @@
+[defaults]
+max_wait_time = 60
+
 [production]
 globus_auth_client_id = "df9e119d-d952-4919-8a81-d2e89ebf4b58"
-max_wait_time = 60
 
 [integration]
 globus_auth_client_id = "983c81bd-92db-4961-9b24-4b12b17a5db0"
