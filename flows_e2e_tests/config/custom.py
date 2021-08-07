@@ -7,16 +7,24 @@ class CensoredDynaconf(Dynaconf):
     censored_field_length = 10
 
     @property
-    def censored(self):
+    def sanitized(self):
         settings = {}
         for f in self.dict_fields:
-            settings[f] = getattr(self, f)
+            try:
+                settings[f] = getattr(self, f)
+            except AttributeError:
+                continue
 
         for f in self.censored_fields:
-            value = self._censor_value(getattr(self, f))
-            settings[f] = value
+            try:
+                value = getattr(self, f)
+            except AttributeError:
+                continue
+            else:
+                value = self._censor_value(value)
+                settings[f] = value
         return settings
 
-    def _censor_value(self, value: str):
+    def _censor_value(self, value: str) -> str:
         value = "*" * 20 + value[-5:]
         return value[-self.censored_field_length :]

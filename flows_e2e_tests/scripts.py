@@ -4,9 +4,6 @@ import uuid
 import pytest
 import structlog
 
-from flows_e2e_tests.config import settings
-from flows_e2e_tests.utils import flows_client
-
 logger = structlog.get_logger(__name__)
 
 
@@ -16,17 +13,28 @@ def run_tests():
     parser.add_argument(
         "--debug", action="store_true", help="Display discovered test settings"
     )
+    parser.add_argument("--version", action="store_true", help="Display tests version")
     args = parser.parse_args()
 
     if args.debug:
-        print(f"Loaded settings={settings.censored}")
-    elif args.no_slow:
-        pytest.main(["-m not slow"])
+        from flows_e2e_tests.config import settings
+
+        print(f'Settings for "{settings.current_env}": {settings.sanitized}')
+    elif args.version:
+        from flows_e2e_tests import __version__
+
+        print(f"Globus Flows E2E Tests v{__version__}")
     else:
-        pytest.main()
+        pytest_args = []
+        if args.no_slow:
+            pytest_args.append("-m not slow")
+        pytest_args.append("-n 2")
+        pytest.main(pytest_args)
 
 
 def delete_flow():
+    from flows_e2e_tests.utils import flows_client
+
     parser = argparse.ArgumentParser(description="Delete one or more Flows")
     parser.add_argument(
         "flow_ids",

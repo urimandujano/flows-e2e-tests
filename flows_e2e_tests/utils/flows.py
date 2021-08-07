@@ -23,7 +23,7 @@ try:
         http_timeout=10,
     )
 except GlobusAPIError as err:
-    logger.exception("Unable to create a FlowsClient", settings=settings.as_dict())
+    logger.exception("Unable to create a FlowsClient", settings=settings.censored())
     raise SystemExit from err
 else:
     logger.debug(f"Initialized Flows Client at {flows_client.base_url}")
