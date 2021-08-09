@@ -1,0 +1,10 @@
+# This file is necessary to run pytest as CLI tool
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q -v"
+testpaths = [
+    "scenarios",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]

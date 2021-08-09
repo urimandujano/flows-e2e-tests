@@ -34,8 +34,7 @@ def run_tests():
             pytest_args.append("-m not slow")
         if not args.no_parallel:
             pytest_args.append("-n 2")
-
-        test_dir = str(Path(__file__).resolve().parent / "scenarios")
+        test_dir = str(Path(__file__).resolve().parent)
         pytest_args.append(test_dir)
         pytest.main(pytest_args)
 
