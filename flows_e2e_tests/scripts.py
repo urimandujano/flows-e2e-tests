@@ -1,5 +1,6 @@
 import argparse
 import uuid
+from pathlib import Path
 
 import pytest
 import structlog
@@ -10,6 +11,9 @@ logger = structlog.get_logger(__name__)
 def run_tests():
     parser = argparse.ArgumentParser(description="Run Flows E2E tests")
     parser.add_argument("--no-slow", action="store_true", help="Don't run slow tests")
+    parser.add_argument(
+        "--no-parallel", action="store_true", help="Don't run tests in parallel"
+    )
     parser.add_argument(
         "--debug", action="store_true", help="Display discovered test settings"
     )
@@ -28,7 +32,11 @@ def run_tests():
         pytest_args = []
         if args.no_slow:
             pytest_args.append("-m not slow")
-        pytest_args.append("-n 2")
+        if not args.no_parallel:
+            pytest_args.append("-n 2")
+
+        test_dir = str(Path(__file__).resolve().parent / "scenarios")
+        pytest_args.append(test_dir)
         pytest.main(pytest_args)
 
 
