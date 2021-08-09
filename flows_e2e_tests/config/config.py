@@ -43,6 +43,7 @@ settings = CensoredDynaconf(
         PROJECT_DIR / ".secrets.toml",
     ],
     load_dotenv=True,
+    dotenv_path=Path.cwd(),
     validators=[
         Validator(
             "GLOBUS_AUTH_CLIENT_SECRET",
