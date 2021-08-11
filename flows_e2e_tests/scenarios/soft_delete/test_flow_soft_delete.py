@@ -3,7 +3,13 @@ import typing as t
 import pytest
 from globus_sdk.exc import GlobusAPIError
 
-from flows_e2e_tests.utils import FlowResponse, RunResponse, flows_client
+from flows_e2e_tests.utils import (
+    FlowResponse,
+    RunResponse,
+    authorizer_for_scope,
+    flows_client,
+    scopes,
+)
 
 from .conftest import flow_input
 
@@ -12,7 +18,10 @@ def test_runs_persist_after_flow_delete(
     flow_with_runs: t.Tuple[FlowResponse, t.List[RunResponse]],
 ):
     flow, runs = flow_with_runs
-    response = flows_client.enumerate_actions(filters={"filter_flow_id": flow.id})
+    authz = authorizer_for_scope(scopes.FLOWS_RUN_STATUS)
+    response = flows_client.enumerate_actions(
+        filters={"filter_flow_id": flow.id}, authorizer=authz
+    )
 
     run_ids = [r.run_id for r in runs]
     for r_resp in response.data["runs"]:
