@@ -1,3 +1,4 @@
+from . import scopes
 from .auth import auth_client, authorizer_for_scope, authorizers_by_scope
 from .flows import flows_client
 from .models import FlowResponse, RunResponse
@@ -11,4 +12,5 @@ all = [
     "flows_client",
     "FlowResponse",
     "RunResponse",
+    "scopes",
 ]
