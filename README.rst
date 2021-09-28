@@ -9,7 +9,7 @@ usage.
 Installation
 ============
 
-`pip install globus-flows-e2e-tests`
+`pip install flows-e2e-tests`
 
 Usage
 =====
