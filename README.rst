@@ -10,10 +10,16 @@ Installation
 ============
 
 The preferred installation is via pipx:
-`pipx install flows-e2e-tests`
+
+.. code-block:: bash
+    
+    pipx install flows-e2e-tests
 
 But pip can work too:
-`pip install flows-e2e-tests`
+
+.. code-block:: bash
+
+    pip install flows-e2e-tests
 
 It is also possible to install these tests directly from this git repository:
 
