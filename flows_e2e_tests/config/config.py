@@ -21,7 +21,8 @@ VALID_TEST_ENVS = [
 
 
 logger.debug(f"Tests will load base settings from {__package__}")
-if (Path.cwd() / ".env").exists():
+dotenv_found = (Path.cwd() / ".env").exists()
+if dotenv_found:
     logger.debug(f"Tests will load custom settings from .env")
 
 TARGET_ENV = os.environ.get(ENV_SWITCHER, "production")
@@ -42,7 +43,7 @@ settings = CensoredDynaconf(
         PROJECT_DIR / "settings.toml",
         PROJECT_DIR / ".secrets.toml",
     ],
-    load_dotenv=True,
+    load_dotenv=dotenv_found,
     dotenv_path=Path.cwd(),
     validators=[
         Validator(
