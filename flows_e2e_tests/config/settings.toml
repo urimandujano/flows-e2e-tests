@@ -2,17 +2,19 @@
 max_wait_time = 60
 
 [production]
-globus_auth_client_id = "df9e119d-d952-4919-8a81-d2e89ebf4b58"
+globus_auth_client_id = "668ba02a-451a-4385-a89f-bc0aa5028703"
 
 [integration]
-globus_auth_client_id = "983c81bd-92db-4961-9b24-4b12b17a5db0"
+globus_auth_client_id = "2e116238-2786-4be1-829b-589568bc41be"
 
 [sandbox]
-globus_auth_client_id = "dce62f09-2e56-46d9-8eea-e6fcea88b65c"
+globus_auth_client_id = "301bf093-ed19-4325-968c-3c54424cbafa"
 
 [test]
-globus_auth_client_id = "cdd9e469-d9ce-4f94-96fd-c702b325c207"
+globus_auth_client_id = "f0724243-94c9-4295-b713-845bb963b148"
 
 [preview]
+globus_auth_client_id = "2f7f6097-c8cf-48d7-b2ef-6005f69f24d0"
 
 [staging]
+globus_auth_client_id = "faad11cc-da9b-4470-90d7-8b286c96c659"

@@ -44,7 +44,7 @@ def run_tests():
         from flows_e2e_tests.config import settings
 
         print(f'Settings for "{settings.current_env}": {settings.sanitized}')
-        print(f"Invoking pytest as 'pytest {' '.join(pytest_args)}'")
+        print(f"Would invoke pytest as 'pytest {' '.join(pytest_args)}'")
     else:
         pytest.main(pytest_args)
 

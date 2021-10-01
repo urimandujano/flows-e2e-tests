@@ -144,6 +144,8 @@ portal follows the pattern of:
 go to the ``Automate`` project and locate or create a client called ``Flows
 E2E Testing``. Copy its ID and create a personal secret for the environment.
 
+| The Auth preview environment is at https://auth.preview.globus.org/v2/web/developers
+
 Adding Tests
 ============
 
