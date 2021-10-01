@@ -34,42 +34,53 @@ Configuration
 This package relies on environment variables [listed below] to determine its
 runtime configuration. Most use cases will only require setting the Flows
 environment and Globus Auth client secret variables. The base configuration is
-stored in `flows_e2e_tests/config/settings.toml`. 
+stored in ``flows_e2e_tests/config/settings.toml``. 
 
 Environment variables
 *********************
 
 E2E_TESTS_FLOWS_ENV
 ^^^^^^^^^^^^^^^^^^^
-    purpose: 
-        Used to select the Flows environment to run tests against. This value is
-        also sets the `GLOBUS_SDK_ENVIRONMENT` variable which allows the
-        Automate SDK to function against the different environments. This
-        environment variable must be set manually and will not be read from a
-        .env file.
-    values: production, integration, sandbox, preview, staging, test
-    default: production
+purpose: 
+    Used to select the Flows environment to run tests against. This value is
+    also sets the ``GLOBUS_SDK_ENVIRONMENT`` variable which allows the
+    Automate SDK to function against the different environments. This
+    environment variable must be set manually and will not be read from a
+    .env file.
+values: 
+    - production
+    - integration
+    - sandbox
+    - preview
+    - staging
+    - test
+default: 
+    - production
 
 E2E_TESTS_GLOBUS_AUTH_CLIENT_ID
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    purpose: 
-        The Globus Auth client ID which will be used to run the tests. This
-        client should be a confidential client capabable of consenting to scopes
-        dynamically. Care should be taken to ensure that the client used for
-        testing exists in the target test environment. Note that although you
-        can set this as an environment variable or in a .env file, you usually
-        want to use the client ID defined in the package's config.
-    values: uuid
-    default: environment specific client ID
+purpose: 
+    The Globus Auth client ID which will be used to run the tests. This
+    client should be a confidential client capabable of consenting to scopes
+    dynamically. Care should be taken to ensure that the client used for
+    testing exists in the target test environment. Note that although you
+    can set this as an environment variable or in a .env file, you usually
+    want to use the client ID defined in the package's config.
+values: 
+    - some uuid
+default: 
+    - environment specific client ID
 
 E2E_TESTS_GLOBUS_AUTH_CLIENT_SECRET
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    purpose: 
-        The Globus Auth client ID's secret which is used to authenticate
-        requests. Be sure that the secret used for testing exists in the target
-        test environment.
-    values: secret
-    default: none
+purpose: 
+    The Globus Auth client ID's secret which is used to authenticate
+    requests. Be sure that the secret used for testing exists in the target
+    test environment.
+values: 
+    - secret
+default: 
+    - none
 
 .env file
 *********
