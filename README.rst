@@ -87,10 +87,10 @@ default:
 
 To simplify interactive use and remove the need to export sensitive secrets on
 the command line (which may be stored in your shell's history), this package
-will automatically attempt to load a file named `.env` in the directory from
-which it's run. This file should be in `KEY=VALUE` format where the KEY is one 
-of the environment variables above. This file SHOULD NOT attempt to define the
-E2E_TESTS_FLOWS_ENV variable as it will not be read.
+will automatically attempt to load a file named ``.env`` in the directory from
+which it's run. This file should be in ``KEY=VALUE`` format where the ``KEY`` is
+one of the environment variables above. This file **SHOULD NOT** define the
+``E2E_TESTS_FLOWS_ENV`` variable as it will not be read from this file.
 
 Below is an example of what the .env file may look like:
 
@@ -99,7 +99,7 @@ Below is an example of what the .env file may look like:
    E2E_TESTS_GLOBUS_AUTH_CLIENT_SECRET=$uper$ecret$auce
    E2E_TESTS_GLOBUS_AUTH_CLIENT_ID=00000000-0000-0000-0000-000000000000
 
-| *Store the .env file in a safe place*
+**Store the .env file in a safe place**
 
 Usage
 =====
@@ -140,13 +140,13 @@ Creating a Client or Secrets in an Auth Environment
 
 Go to the developer page for the Auth environment the client will exist in. The
 portal follows the pattern of:
-`https://auth.{environment_name}.globuscs.info/v2/web/developers`. Once there,
-go to the `Automate` project and locate or create a client called `Flows
-E2E Testing`. Copy its ID and create a personal secret for the environment.
+``https://auth.{environment_name}.globuscs.info/v2/web/developers``. Once there, 
+go to the ``Automate`` project and locate or create a client called ``Flows
+E2E Testing``. Copy its ID and create a personal secret for the environment.
 
 Adding Tests
 ============
 
 If a test does not logically fit in one of the existing scenarios, add a new
 scenario. Each scenario should be self contained and define its own resources in
-a conftest. Slow tests should use the `@pytest.mark.slow` decorator.
+a conftest. Slow tests should use the ``@pytest.mark.slow`` decorator.
