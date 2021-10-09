@@ -6,7 +6,7 @@ from flows_e2e_tests.utils import (
     FlowResponse,
     RunResponse,
     action_provider_url_for_environment,
-    flows_client,
+    get_flows_client,
 )
 
 flow = {
@@ -39,6 +39,7 @@ metadata = {
 
 @pytest.fixture(scope="module")
 def flow_for_tests(request):
+    flows_client = get_flows_client()
     deploy_resp = flows_client.deploy_flow(
         title=f"Integration Test Flow for {request.module.__name__}",
         flow_definition=flow,
@@ -53,7 +54,7 @@ def flow_for_tests(request):
 
 @pytest.fixture(scope="module")
 def run_for_tests(request, flow_for_tests: FlowResponse):
-    run_resp = flows_client.run_flow(
+    run_resp = get_flows_client().run_flow(
         flow_id=flow_for_tests.id,
         flow_scope=flow_for_tests.globus_auth_scope,
         flow_input=flow_input,

@@ -7,7 +7,7 @@ from flows_e2e_tests.utils import (
     FlowResponse,
     RunResponse,
     authorizer_for_scope,
-    flows_client,
+    get_flows_client,
     scopes,
 )
 
@@ -19,7 +19,7 @@ def test_runs_persist_after_flow_delete(
 ):
     flow, runs = flow_with_runs
     authz = authorizer_for_scope(scopes.FLOWS_RUN_STATUS)
-    response = flows_client.enumerate_actions(
+    response = get_flows_client().enumerate_actions(
         filters={"filter_flow_id": flow.id}, authorizer=authz
     )
 
@@ -35,6 +35,7 @@ def test_run_operations_work_after_delete(
 ):
     flow, runs = flow_with_runs
 
+    flows_client = get_flows_client()
     response = flows_client.flow_action_status(
         flow.id, flow.globus_auth_scope, runs[0].run_id
     )
@@ -66,7 +67,7 @@ def test_flow_cannot_be_retrieved_after_delete(
 ):
     flow, _ = flow_with_runs
     with pytest.raises(GlobusAPIError) as err:
-        flows_client.get_flow(flow.id)
+        get_flows_client().get_flow(flow.id)
     assert err.value.http_status == 404
 
 
@@ -75,7 +76,7 @@ def test_flow_cannot_be_run_after_delete(
 ):
     flow, _ = flow_with_runs
     with pytest.raises(GlobusAPIError) as err:
-        flows_client.run_flow(
+        get_flows_client().run_flow(
             flow.id, flow_scope=flow.globus_auth_scope, flow_input=flow_input
         )
     assert err.value.http_status == 404
@@ -86,7 +87,7 @@ def test_flow_cannot_be_removed_after_delete(
 ):
     flow, _ = flow_with_runs
     with pytest.raises(GlobusAPIError) as err:
-        flows_client.delete_flow(flow.id)
+        get_flows_client().delete_flow(flow.id)
     assert err.value.http_status == 404
 
 
@@ -94,7 +95,7 @@ def test_flow_is_not_listed_after_delete(
     flow_with_runs: t.Tuple[FlowResponse, t.List[RunResponse]]
 ):
     flow, _ = flow_with_runs
-    response = flows_client.list_flows()
+    response = get_flows_client().list_flows()
     for f in response.data["flows"]:
         f = FlowResponse(**f)
         assert f.id != flow.id
@@ -105,5 +106,5 @@ def test_flow_cannot_be_updated_after_delete(
 ):
     flow, _ = flow_with_runs
     with pytest.raises(GlobusAPIError) as err:
-        flows_client.update_flow(flow.id, title="Updated Flow Title")
+        get_flows_client().update_flow(flow.id, title="Updated Flow Title")
     assert err.value.http_status == 404

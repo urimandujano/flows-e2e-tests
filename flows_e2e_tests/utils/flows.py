@@ -1,10 +1,7 @@
 import structlog
-from globus_automate_client import create_flows_client
+from globus_automate_client import FlowsClient, create_flows_client
 from globus_automate_client.flows_client import MANAGE_FLOWS_SCOPE
-from globus_sdk import GlobusAPIError
 from globus_sdk.authorizers import RefreshTokenAuthorizer
-
-from flows_e2e_tests.config import settings
 
 from .auth import authorizer_for_scope
 
@@ -15,15 +12,12 @@ def authorizer_retriever(*args, flow_scope: str, **kwargs) -> RefreshTokenAuthor
     return authorizer_for_scope(flow_scope)
 
 
-try:
+def get_flows_client() -> FlowsClient:
     flows_client = create_flows_client(
         base_url=None,
         authorizer=authorizer_retriever(flow_scope=MANAGE_FLOWS_SCOPE),
         authorizer_callback=authorizer_retriever,
         http_timeout=10,
     )
-except GlobusAPIError as err:
-    logger.exception("Unable to create a FlowsClient", settings=settings.censored())
-    raise SystemExit from err
-else:
     logger.debug(f"Initialized Flows Client at {flows_client.base_url}")
+    return flows_client

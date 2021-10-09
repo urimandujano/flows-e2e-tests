@@ -1,4 +1,4 @@
-from flows_e2e_tests.utils import FlowResponse, flows_client
+from flows_e2e_tests.utils import FlowResponse, get_flows_client
 
 
 def test_deployed_flow_can_get_updated_by_creator(flow_for_tests: FlowResponse):
@@ -11,7 +11,7 @@ def test_deployed_flow_can_get_updated_by_creator(flow_for_tests: FlowResponse):
         "subtitle": "This subtitle was updated",
         "description": "This description was updated",
     }
-    update_resp = flows_client.update_flow(flow_for_tests.id, **updates)
+    update_resp = get_flows_client().update_flow(flow_for_tests.id, **updates)
     assert update_resp.http_status == 200
     for key, value in updates.items():
         # The SDK kwarg is flow_definition but the API's return value is

@@ -2,7 +2,7 @@ import typing as t
 
 import pytest
 
-from flows_e2e_tests.utils import FlowResponse, flows_client
+from flows_e2e_tests.utils import FlowResponse, get_flows_client
 
 flow_definition = {
     "StartAt": "PassState",
@@ -28,7 +28,7 @@ metadata = {
 
 @pytest.fixture(scope="function")
 def flow_for_one_test(request):
-    deploy_resp = flows_client.deploy_flow(
+    deploy_resp = get_flows_client().deploy_flow(
         title=f"Integration Test Flow for {request.module.__name__}",
         flow_definition=flow_definition,
         **metadata,
@@ -39,6 +39,7 @@ def flow_for_one_test(request):
 
 @pytest.fixture(scope="module")
 def flow_for_tests(request):
+    flows_client = get_flows_client()
     deploy_resp = flows_client.deploy_flow(
         title=f"Integration Test Flow for {request.module.__name__}",
         flow_definition=flow_definition,
