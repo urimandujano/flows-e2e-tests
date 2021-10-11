@@ -3,12 +3,15 @@ import uuid
 from pathlib import Path
 
 import pytest
+import structlog
 import typer
 
 from flows_e2e_tests.config import get_settings
 from flows_e2e_tests.scenarios.load_testing import start
 from flows_e2e_tests.scenarios.load_testing.users import PassFlowUser
 from flows_e2e_tests.utils import get_flows_client
+
+logger = structlog.getLogger(__name__)
 
 app = typer.Typer()
 
@@ -118,6 +121,11 @@ def load(
         help="If set, load tests will be performed with this many users",
     ),
 ):
+    settings = get_settings()
+    if settings.current_env == "production":
+        logger.error("Run load tests against production, you will not")
+        raise SystemExit()
+
     load_scenario = load_tests.get(test)
     start(load_scenario, users)
     raise typer.Exit()
