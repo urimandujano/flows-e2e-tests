@@ -1,9 +1,10 @@
 import time
 
 import pytest
+from globus_automate_client import flows_client
 
-from flows_e2e_tests.config import settings
-from flows_e2e_tests.utils import FlowResponse, RunResponse, flows_client
+from flows_e2e_tests.config import get_settings
+from flows_e2e_tests.utils import FlowResponse, RunResponse, get_flows_client
 
 
 @pytest.mark.slow
@@ -11,6 +12,8 @@ def test_run_with_consent_required_can_resume_to_completion(
     flow_for_tests: FlowResponse, run_for_tests: RunResponse
 ):
     # Wait for the Run to become inactive
+    settings = get_settings()
+    flows_client = get_flows_client()
     for _ in range(settings.max_wait_time):
         run_status_resp = flows_client.flow_action_status(
             flow_id=flow_for_tests.id,

@@ -13,6 +13,8 @@ structlog = "^21.1.0"
 pytest = "^6.2.4"
 pytest-xdist = "^2.3.0"
 pydantic = "^1.8.2"
+locust = "^2.2.3"
+typer = {version = "<0.4.0", extras = ["all"]}
 
 [tool.poetry.dev-dependencies]
 black = "^21.6b0"
@@ -25,7 +27,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 globus-flows-rm-flow = 'flows_e2e_tests.scripts:delete_flow'
-globus-flows-e2e-tests = 'flows_e2e_tests.scripts:run_tests'
+globus-flows-e2e-tests = 'flows_e2e_tests.cli.main:app'
 
 [tool.isort]
 profile = "black"
