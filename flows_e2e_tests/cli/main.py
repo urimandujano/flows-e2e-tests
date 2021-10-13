@@ -98,7 +98,7 @@ def complete_load_tests(incomplete: str):
 def load_test_validator(ctx: typer.Context, test_name: str) -> str:
     # Check if this is doing autocompletion
     if ctx.resilient_parsing:
-        return
+        return  # type: ignore
 
     test = load_tests.get(test_name)
     if test is None:
