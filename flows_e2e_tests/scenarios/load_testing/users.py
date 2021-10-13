@@ -30,6 +30,8 @@ class PassFlowUser(FlowsHttpUser):
     }
     flow_schema = {"additionalProperties": False}
 
+    # These get set during test setup
+    host = ""
     flow_id: str = ""
     access_token: str = ""
 
