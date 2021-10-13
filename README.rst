@@ -1,7 +1,7 @@
 Flows E2E Tests
 ---------------
 
-This is a project for running integration tests against a particular Flows
+This is a project for running end to end tests against a particular Flows
 service deployment. This project aims to be simple to install, configure and
 use. It contains no Globus secrets and therefore is suitable for public view and
 usage.
@@ -41,46 +41,61 @@ Environment variables
 
 E2E_TESTS_FLOWS_ENV
 ^^^^^^^^^^^^^^^^^^^
-purpose: 
-    Used to select the Flows environment to run tests against. This value is
-    also sets the ``GLOBUS_SDK_ENVIRONMENT`` variable which allows the
-    Automate SDK to function against the different environments. This
-    environment variable must be set manually and will not be read from a
-    .env file.
-values: 
-    - production
-    - integration
-    - sandbox
-    - preview
-    - staging
-    - test
-default: 
-    - production
+- purpose
+  
+  Used to select the Flows environment to run tests against. This value is
+  also sets the ``GLOBUS_SDK_ENVIRONMENT`` variable which allows the
+  Automate SDK to function against the different environments. This
+  environment variable must be set manually and will not be read from a
+  .env file.
+
+- values
+
+  - production
+  - integration
+  - sandbox
+  - preview
+  - staging
+  - test
+
+- default
+
+  production
 
 E2E_TESTS_GLOBUS_AUTH_CLIENT_ID
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-purpose: 
-    The Globus Auth client ID which will be used to run the tests. This
-    client should be a confidential client capabable of consenting to scopes
-    dynamically. Care should be taken to ensure that the client used for
-    testing exists in the target test environment. Note that although you
-    can set this as an environment variable or in a .env file, you usually
-    want to use the client ID defined in the package's config.
-values: 
-    - some uuid
-default: 
-    - environment specific client ID
+- purpose
+
+  The Globus Auth client ID which will be used to run the tests. This
+  client should be a confidential client capabable of consenting to scopes
+  dynamically. Care should be taken to ensure that the client used for
+  testing exists in the target test environment. Note that although you
+  can set this as an environment variable or in a .env file, you usually
+  want to use the client ID defined in the package's config.
+
+- values: 
+
+  - some uuid
+
+- default: 
+
+  environment specific client ID
 
 E2E_TESTS_GLOBUS_AUTH_CLIENT_SECRET
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-purpose: 
-    The Globus Auth client ID's secret which is used to authenticate
-    requests. Be sure that the secret used for testing exists in the target
-    test environment.
-values: 
-    - secret
-default: 
-    - none
+- purpose
+
+  The Globus Auth client ID's secret which is used to authenticate
+  requests. Be sure that the secret used for testing exists in the target
+  test environment.
+
+- values
+
+  - secret
+
+- default
+    
+  none
 
 .env file
 *********
@@ -116,24 +131,44 @@ Or if running the package directly from the repository:
 
     poetry run globus-flows-e2e-tests --version
 
-To only display the current configuration:
+To display the end-to-end tests current configuration:
 
 .. code-block:: bash
 
-    globus-flows-e2e-tests --debug
+    globus-flows-e2e-tests e2e --print-config
 
 Slow tests can be skipped by running:
 
 .. code-block:: bash
 
-    globus-flows-e2e-tests --no-slow
+    globus-flows-e2e-tests e2e --skip-slow
 
-If the Globus Auth client ID is not whitelisted, tests must be run in serial
-(since they won't be able to deploy multiple Flows at once). To do so:
+Tests will default to running in serial since Flows only allows whitelisted
+clients to deploy multiple flows. If the Globus Auth client ID is whitelisted,
+tests can be run in parallel. To do so:
 
 .. code-block:: bash
 
-    globus-flows-e2e-tests --no-parallel
+    globus-flows-e2e-tests e2e --parallel
+
+You can also run locust load tests via the CLI on non-prod environments. You can
+choose a test to run and the number of users to run it with via the `load`
+subcommand: 
+
+.. code-block:: bash
+
+    globus-flows-e2e-tests load --test <TEST_NAME> --users <N_USERS>
+
+If you install the CLI autocomplete, you can see which tests are available to
+run via:
+
+.. code-block:: bash
+
+    globus-flows-e2e-tests load --test [TAB][TAB]
+
+Running the load test will load a webpage display at http://127.0.0.1:8089.
+The test may be stopped and the user count may be tweaked via the webpage but
+re-starting the tests must be done via the CLI. 
 
 Creating a Client or Secrets in an Auth Environment
 ===================================================
