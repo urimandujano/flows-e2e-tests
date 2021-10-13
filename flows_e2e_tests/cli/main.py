@@ -49,9 +49,11 @@ def e2e(
         False, "--skip-slow", show_default=True, help="Skip long-running tests"
     ),
     parallel: bool = typer.Option(
-        False, show_default=True, help="Run tests in parallel"
+        False, "--parallel", show_default=True, help="Run tests in parallel"
     ),
-    print_config: bool = typer.Option(False, help="Display discovered test settings"),
+    print_config: bool = typer.Option(
+        False, "--print-config", help="Display discovered test settings"
+    ),
 ):
     pytest_args = []
     if skip_slow:
