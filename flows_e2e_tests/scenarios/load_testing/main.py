@@ -7,10 +7,27 @@ import structlog
 from locust.env import Environment
 from locust.stats import stats_history
 
-from flows_e2e_tests.scenarios.load_testing.users import FlowsHttpUser
-from flows_e2e_tests.utils import FlowResponse, get_flows_client, get_token_for_scope
+from flows_e2e_tests.scenarios.load_testing.users import ActionHttpUser, FlowsHttpUser
+from flows_e2e_tests.utils import (
+    FlowResponse,
+    action_provider_scope,
+    action_provider_url_for_environment,
+    get_flows_client,
+    get_token_for_scope,
+)
 
 logger = structlog.getLogger(__name__)
+
+
+def init_action(*_, **kwargs):
+    """
+    This runs before ActionHttpUser tests and configures the test with
+    properties required to run the load test
+    """
+    user: t.Type[ActionHttpUser] = kwargs["environment"].user_classes[0]
+    user.host = action_provider_url_for_environment(user.action_provider)
+    action_scope = action_provider_scope(user.host)
+    user.access_token = get_token_for_scope(action_scope)
 
 
 def deploy_flow(*_, **kwargs):
@@ -37,7 +54,7 @@ def deploy_flow(*_, **kwargs):
 
 
 def remove_flow(*_, **kwargs):
-    user = kwargs["environment"].user_classes[0]
+    user: t.Type[FlowsHttpUser] = kwargs["environment"].user_classes[0]
     flow_id = getattr(user, "flow_id", None)
     if flow_id:
         resp = get_flows_client().delete_flow(flow_id)
@@ -45,14 +62,20 @@ def remove_flow(*_, **kwargs):
         logger.info(f"Removed Flow {flow_id}")
 
 
-def start(user_class: t.Type[FlowsHttpUser], n_workers: int = 1):
+def start(
+    user_class: t.Union[t.Type[FlowsHttpUser], t.Type[ActionHttpUser]],
+    n_workers: int = 1,
+):
     # monkey patch the locust CLI since it will parse our CLI args and fail
     locust.argument_parser.ui_extra_args_dict = lambda *args, **kwargs: {}
     env = Environment(user_classes=[user_class])
 
-    # Add start/stop hooks to init/remove Flow state
-    env.events.test_start.add_listener(deploy_flow)
-    env.events.test_stop.add_listener(remove_flow)
+    # Add start/stop hooks to init/remove test state
+    if issubclass(user_class, ActionHttpUser):
+        env.events.test_start.add_listener(init_action)
+    elif issubclass(user_class, FlowsHttpUser):
+        env.events.test_start.add_listener(deploy_flow)
+        env.events.test_stop.add_listener(remove_flow)
 
     env.create_local_runner()
 

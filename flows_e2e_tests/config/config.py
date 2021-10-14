@@ -21,7 +21,6 @@ def get_settings() -> CensoredDynaconf:
         "staging",
     ]
 
-    logger.debug(f"Tests will load base settings from {__package__}")
     dotenv_found = (Path.cwd() / ".env").exists()
     if dotenv_found:
         logger.debug(f"Tests will load custom settings from .env")
