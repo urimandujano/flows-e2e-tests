@@ -8,7 +8,7 @@ import typer
 
 from flows_e2e_tests.config import get_settings
 from flows_e2e_tests.scenarios.load_testing import start
-from flows_e2e_tests.scenarios.load_testing.users import PassFlowUser
+from flows_e2e_tests.scenarios.load_testing.users import HelloWorldUser, PassFlowUser
 from flows_e2e_tests.utils import get_flows_client
 
 logger = structlog.getLogger(__name__)
@@ -78,7 +78,7 @@ def e2e(
 
 load_tests = {
     PassFlowUser.__name__: PassFlowUser,
-    "PassFlowUserDup": PassFlowUser,
+    HelloWorldUser.__name__: HelloWorldUser,
 }
 
 

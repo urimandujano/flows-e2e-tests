@@ -14,9 +14,7 @@ flow = {
     "States": {
         "HelloState": {
             "Type": "Action",
-            "ActionUrl": action_provider_url_for_environment(
-                "https://actions.automate.globus.org/hello_world"
-            ),
+            "ActionUrl": action_provider_url_for_environment("hello_world"),
             "Parameters": {
                 "required_dependent_scope": "urn:globus:auth:scope:groups.api.globus.org:all"
             },
