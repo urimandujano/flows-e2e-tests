@@ -29,7 +29,7 @@ jobs:
       - name: Update package version
         run: |
           poetry version patch
-          echo $(poetry version -s) > flows_e2e_tests/__init__.py
+          echo __version__ = \"$(poetry version -s)\" > flows_e2e_tests/__init__.py
 
       - name: Build and publish
         env:
@@ -44,3 +44,10 @@ jobs:
           git add pyproject.toml poetry.lock flows_e2e_tests/__init__.py
           git commit -m "GH Action updates for release v$(poetry version -s)" 
           git push
+
+      - name: Create and publish a tag for this release
+        run: |
+          git config --global user.name 'urimandujano'
+          git config --global user.email '62311618+urimandujano@users.noreply.github.com'
+          git tag v$(poetry version -s)
+          git push --tags
