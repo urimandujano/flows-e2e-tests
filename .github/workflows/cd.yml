@@ -1,0 +1,46 @@
+name: Publish to PyPi
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    name: Publish a release to PyPi
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Update dependencies
+        run: poetry update
+
+      - name: Update package version
+        run: |
+          poetry version patch
+          echo $(poetry version -s) > flows_e2e_tests/__init__.py
+
+      - name: Build and publish
+        env:
+          POETRY_HTTP_BASIC_PYPI_USERNAME: __token__
+          POETRY_HTTP_BASIC_PYPI_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: poetry publish --build
+
+      - name: Commit the auto-updated files
+        run: |
+          git config --global user.name 'urimandujano'
+          git config --global user.email '62311618+urimandujano@users.noreply.github.com'
+          git add pyproject.toml poetry.lock flows_e2e_tests/__init__.py
+          git commit -m "GH Action updates for release v$(poetry version -s)" 
+          git push
